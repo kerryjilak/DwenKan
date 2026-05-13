@@ -1,0 +1,17 @@
+{
+  "name": "Subthreshold",
+  "description": "Low input current — voltage oscillates but never spikes",
+  "type": "neuron",
+  "config": {
+    "params": {
+      "V_rest": -70,
+      "V_threshold": -55,
+      "V_reset": -75,
+      "tau": 10,
+      "R": 1
+    },
+    "I_ext": 10,
+    "dt": 0.1,
+    "duration": 200
+  }
+}

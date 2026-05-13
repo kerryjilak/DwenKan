@@ -1,0 +1,19 @@
+{
+  "name": "Feedforward Chain",
+  "description": "3-neuron chain — activity propagates from A to B to C",
+  "type": "network",
+  "config": {
+    "neurons": [
+      {"id": "A"},
+      {"id": "B"},
+      {"id": "C"}
+    ],
+    "connections": [
+      {"source_id": "A", "target_id": "B", "weight": 20, "delay": 2},
+      {"source_id": "B", "target_id": "C", "weight": 20, "delay": 2}
+    ],
+    "external_currents": {"A": 25},
+    "dt": 0.1,
+    "duration": 150
+  }
+}

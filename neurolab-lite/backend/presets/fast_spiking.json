@@ -1,0 +1,17 @@
+{
+  "name": "Fast Spiking",
+  "description": "Low time constant, high current — fast firing interneuron",
+  "type": "neuron",
+  "config": {
+    "params": {
+      "V_rest": -70,
+      "V_threshold": -55,
+      "V_reset": -75,
+      "tau": 5,
+      "R": 1
+    },
+    "I_ext": 30,
+    "dt": 0.1,
+    "duration": 100
+  }
+}
