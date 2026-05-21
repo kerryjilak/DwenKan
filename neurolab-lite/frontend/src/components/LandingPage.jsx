@@ -97,7 +97,7 @@ export default function LandingPage() {
             Then compare them with artificial neural networks, all in your browser.
           </p>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => navigate('/app')}
               className="group flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-8 py-3.5 rounded-xl text-base font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/20 cursor-pointer"

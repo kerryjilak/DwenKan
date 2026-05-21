@@ -32,6 +32,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastParams, setLastParams] = useState(null);
+  const [mobilePanelView, setMobilePanelView] = useState('controls');
 
   const handleNeuronRun = async ({ params, I_ext, dt, duration }) => {
     setLoading(true);
@@ -40,6 +41,7 @@ export default function App() {
       const data = await simulateNeuron({ params, I_ext, dt, duration });
       setResult(data);
       setLastParams(params);
+      setMobilePanelView('results');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -53,6 +55,7 @@ export default function App() {
     try {
       const data = await simulateNetwork(config);
       setNetResult(data);
+      setMobilePanelView('results');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -66,6 +69,7 @@ export default function App() {
     try {
       const data = await simulateAI(config);
       setAiResult(data);
+      setMobilePanelView('results');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -146,11 +150,33 @@ export default function App() {
         </div>
       </header>
 
+      {/* Mobile Controls / Results toggle */}
+      <div className="lg:hidden border-b border-gray-800/50 bg-gray-950/80 backdrop-blur-sm px-4 py-2">
+        <div className="flex bg-gray-900 rounded-lg p-1 gap-1">
+          <button
+            onClick={() => setMobilePanelView('controls')}
+            className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors cursor-pointer ${
+              mobilePanelView === 'controls' ? 'bg-gray-700 text-white' : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            Controls
+          </button>
+          <button
+            onClick={() => setMobilePanelView('results')}
+            className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors cursor-pointer ${
+              mobilePanelView === 'results' ? 'bg-gray-700 text-white' : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            Results
+          </button>
+        </div>
+      </div>
+
       {/* Main content */}
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
           {/* Sidebar */}
-          <aside className="space-y-4">
+          <aside className={`space-y-4 ${mobilePanelView === 'results' ? 'hidden lg:block' : ''}`}>
             <div data-tour="presets">
               <PresetSelector onLoadPreset={handleLoadPreset} />
             </div>
@@ -178,7 +204,7 @@ export default function App() {
           </aside>
 
           {/* Visualization area */}
-          <section className="space-y-5" data-tour="viz-area">
+          <section className={`space-y-5 ${mobilePanelView === 'controls' ? 'hidden lg:block' : ''}`} data-tour="viz-area">
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -210,7 +236,7 @@ export default function App() {
                           params={lastParams}
                         />
                         <SpikeRaster spikes={result.spikes} />
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                           <StatCard label="Total Spikes" value={result.num_spikes} />
                           <StatCard
                             label="Firing Rate"
@@ -301,7 +327,7 @@ function StatCard({ label, value }) {
 
 function EmptyState({ icon: Icon, title, subtitle }) {
   return (
-    <div className="bg-gray-900/50 border border-gray-800/30 border-dashed rounded-2xl p-16 text-center">
+    <div className="bg-gray-900/50 border border-gray-800/30 border-dashed rounded-2xl p-8 sm:p-16 text-center">
       <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800/50 mb-4">
         <Icon className="w-8 h-8 text-gray-600" />
       </div>

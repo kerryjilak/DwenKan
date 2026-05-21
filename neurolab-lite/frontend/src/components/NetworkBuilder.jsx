@@ -135,47 +135,51 @@ export default function NetworkBuilder({ onRun, loading }) {
         </div>
         <div className="space-y-2">
           {connections.map((c, idx) => (
-            <div key={idx} className="flex items-center gap-1 text-sm">
-              <select
-                value={c.source_id}
-                onChange={(e) => updateConnection(idx, 'source_id', e.target.value)}
-                className="bg-gray-800 text-white px-1 py-1 rounded border border-gray-700 text-xs"
-              >
-                {neurons.map((n) => (
-                  <option key={n.id} value={n.id}>{n.id}</option>
-                ))}
-              </select>
-              <span className="text-gray-500">→</span>
-              <select
-                value={c.target_id}
-                onChange={(e) => updateConnection(idx, 'target_id', e.target.value)}
-                className="bg-gray-800 text-white px-1 py-1 rounded border border-gray-700 text-xs"
-              >
-                {neurons.map((n) => (
-                  <option key={n.id} value={n.id}>{n.id}</option>
-                ))}
-              </select>
-              <label className="text-xs text-gray-500">w:</label>
-              <input
-                type="number"
-                value={c.weight}
-                onChange={(e) => updateConnection(idx, 'weight', e.target.value)}
-                className="w-14 bg-gray-800 text-white text-xs px-1 py-1 rounded border border-gray-700"
-              />
-              <label className="text-xs text-gray-500">d:</label>
-              <input
-                type="number"
-                value={c.delay}
-                min={1}
-                onChange={(e) => updateConnection(idx, 'delay', e.target.value)}
-                className="w-10 bg-gray-800 text-white text-xs px-1 py-1 rounded border border-gray-700"
-              />
-              <button
-                onClick={() => removeConnection(idx)}
-                className="text-red-400 hover:text-red-300 text-xs cursor-pointer"
-              >
-                ✕
-              </button>
+            <div key={idx} className="bg-gray-800/50 rounded-lg p-2 space-y-1.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <select
+                  value={c.source_id}
+                  onChange={(e) => updateConnection(idx, 'source_id', e.target.value)}
+                  className="bg-gray-800 text-white px-2 py-1 rounded border border-gray-700 text-xs"
+                >
+                  {neurons.map((n) => (
+                    <option key={n.id} value={n.id}>{n.id}</option>
+                  ))}
+                </select>
+                <span className="text-gray-500 text-xs">→</span>
+                <select
+                  value={c.target_id}
+                  onChange={(e) => updateConnection(idx, 'target_id', e.target.value)}
+                  className="bg-gray-800 text-white px-2 py-1 rounded border border-gray-700 text-xs"
+                >
+                  {neurons.map((n) => (
+                    <option key={n.id} value={n.id}>{n.id}</option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => removeConnection(idx)}
+                  className="text-red-400 hover:text-red-300 text-xs cursor-pointer ml-auto"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-xs text-gray-500 w-12">Weight:</label>
+                <input
+                  type="number"
+                  value={c.weight}
+                  onChange={(e) => updateConnection(idx, 'weight', e.target.value)}
+                  className="flex-1 min-w-0 bg-gray-800 text-white text-xs px-2 py-1 rounded border border-gray-700"
+                />
+                <label className="text-xs text-gray-500 w-10">Delay:</label>
+                <input
+                  type="number"
+                  value={c.delay}
+                  min={1}
+                  onChange={(e) => updateConnection(idx, 'delay', e.target.value)}
+                  className="flex-1 min-w-0 bg-gray-800 text-white text-xs px-2 py-1 rounded border border-gray-700"
+                />
+              </div>
             </div>
           ))}
         </div>
